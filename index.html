@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adamax Hub</title>
+  <script src="https://telegram.org"></script>
+  <style>
+    body {
+      margin: 0; padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #0f1115; color: #ffffff;
+    }
+    .header { text-align: center; margin-bottom: 20px; }
+    .header h1 { font-size: 22px; margin: 0; color: #38bdf8; }
+    .tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+    .tab {
+      flex: 1; padding: 10px; border: none; border-radius: 10px;
+      background: #1e222b; color: #9ca3af; font-weight: bold; cursor: pointer;
+    }
+    .tab.active { background: #38bdf8; color: #0f1115; }
+    .card {
+      background: #181b22; border-radius: 14px; padding: 14px;
+      margin-bottom: 12px; border: 1px solid #2a2f3a;
+    }
+    .card h3 { margin: 0 0 8px 0; font-size: 16px; color: #e2e8f0; }
+    .card p { margin: 0 0 10px 0; font-size: 14px; color: #94a3b8; line-height: 1.4; }
+    .btn {
+      display: block; width: 100%; padding: 10px; text-align: center;
+      background: #38bdf8; color: #0f1115; text-decoration: none;
+      border-radius: 8px; font-weight: bold; font-size: 14px;
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>ADAMAX HUB</h1>
+    <p id="welcome" style="color:#9ca3af; font-size:13px;">Загрузка профиля...</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('guides', this)">Гайды</button>
+    <button class="tab" onclick="showTab('shop', this)">Магазин</button>
+  </div>
+
+  <div id="guides">
+    <div class="card">
+      <h3>1. Аналитика пропорций (Blackpill)</h3>
+      <p>Правило третей лица, кантуальный наклон глаз, индекс FWHR и визуальная коррекция причёской.</p>
+    </div>
+    <div class="card">
+      <h3>2. Базовый уход за кожей</h3>
+      <p>Умывание без сульфатов, увлажнение церамидами, ежедневный SPF 30+ и режим сна.</p>
+    </div>
+    <div class="card">
+      <h3>3. Овал лица и осанка</h3>
+      <p>Правильное положение языка на нёбе, носовое дыхание, контроль вечерних отёков и осанка шеи.</p>
+    </div>
+  </div>
+
+  <div id="shop" class="hidden">
+    <div class="card">
+      <h3>Полный PDF-гайд: Пропорции и стиль</h3>
+      <p>Подробный разбор типов внешности, подбор причёски и базового гардероба. Цена: 490 руб.</p>
+      <a class="btn" href="https://t.me">Купить у автора</a>
+    </div>
+    <div class="card">
+      <h3>Индивидуальный разбор стиля</h3>
+      <p>Персональные рекомендации по стрижке, уходу за кожей и одежде. Цена: 790 руб.</p>
+      <a class="btn" href="https://t.me">Заказать разбор</a>
+    </div>
+  </div>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+      document.getElementById('welcome').innerText = 'Привет, ' + tg.initDataUnsafe.user.first_name + '!';
+    }
+    function showTab(tabId, btn) {
+      document.getElementById('guides').classList.add('hidden');
+      document.getElementById('shop').classList.add('hidden');
+      document.getElementById(tabId).classList.remove('hidden');
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+    }
+  </script>
+</body>
+</html>
